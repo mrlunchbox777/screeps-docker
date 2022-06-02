@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "screeps-kubernetes.fullname" . }}
+  labels:
+    {{- include "screeps-kubernetes.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    {{- include "screeps-kubernetes.selectorLabels" . | nindent 4 }}
